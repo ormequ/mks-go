@@ -18,6 +18,7 @@ const testGetNodegroupResponseRaw = `
         "flavor_id": "99b62670-9d78-43fd-8f55-d184a4800f8d",
         "id": "a376745a-fbcb-413d-b418-169d059d79ce",
         "local_volume": false,
+        "status": "ACTIVE", 
         "nodes": [
             {
                 "created_at": "2020-02-19T15:41:45.948646Z",
@@ -47,7 +48,8 @@ const testGetNodegroupResponseRaw = `
         "autoscale_max_nodes": 0,
         "nodegroup_type": "STANDARD",
         "user_data": "IyEvYmluL2Jhc2ggLXYKYXB0IC15IHVwZGF0ZQphcHQgLXkgaW5zdGFsbCBtdHI=",
-        "install_nvidia_device_plugin": false
+        "install_nvidia_device_plugin": false,
+        "preemptible": false
     }
 }
 `
@@ -63,6 +65,7 @@ var expectedGetNodegroupResponse = &nodegroup.GetView{
 		ClusterID:        "79265515-3700-49fa-af0e-7f547bce788a",
 		FlavorID:         "99b62670-9d78-43fd-8f55-d184a4800f8d",
 		VolumeGB:         10,
+		Status:           nodegroup.StatusActive,
 		VolumeType:       "basic.ru-1a",
 		LocalVolume:      false,
 		AvailabilityZone: "ru-1a",
@@ -92,6 +95,7 @@ var expectedGetNodegroupResponse = &nodegroup.GetView{
 		AutoscaleMaxNodes:         0,
 		NodegroupType:             "STANDARD",
 		InstallNvidiaDevicePlugin: false,
+		Preemptible:               false,
 	},
 	UserData: "IyEvYmluL2Jhc2ggLXYKYXB0IC15IHVwZGF0ZQphcHQgLXkgaW5zdGFsbCBtdHI=",
 }
@@ -138,7 +142,8 @@ const testListNodegroupsResponseRaw = `
             "available_additional_info": {
                 "user_data": true
             },
-            "install_nvidia_device_plugin": false
+            "install_nvidia_device_plugin": false,
+            "preemptible": false
         }
     ]
 }
@@ -183,6 +188,7 @@ var expectedListNodegroupsResponse = []*nodegroup.ListView{
 			AutoscaleMaxNodes:         0,
 			NodegroupType:             "STANDARD",
 			InstallNvidiaDevicePlugin: false,
+			Preemptible:               false,
 		},
 		AvailableAdditionalInfo: map[string]bool{"user_data": true},
 	},
@@ -213,7 +219,8 @@ const testCreateNodegroupOptsRaw = `
         "autoscale_min_nodes": 1,
         "autoscale_max_nodes": 10,
         "user_data": "IyEvYmluL2Jhc2ggLXYKYXB0IC15IHVwZGF0ZQphcHQgLXkgaW5zdGFsbCBtdHI=",
-        "install_nvidia_device_plugin": false
+        "install_nvidia_device_plugin": false,
+        "preemptible": false
     }
 }
 `
@@ -242,6 +249,7 @@ var testCreateNodegroupOpts = &nodegroup.CreateOpts{
 	AutoscaleMaxNodes:         testutils.IntToPtr(10),
 	UserData:                  "IyEvYmluL2Jhc2ggLXYKYXB0IC15IHVwZGF0ZQphcHQgLXkgaW5zdGFsbCBtdHI=",
 	InstallNvidiaDevicePlugin: testutils.BoolToPtr(false),
+	Preemptible:               testutils.BoolToPtr(false),
 }
 
 // testUpdateNodegroupOptsRaw represents marshalled options for the Update request.
