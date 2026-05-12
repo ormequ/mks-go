@@ -35,7 +35,7 @@ const (
 )
 
 // ClusterType represents custom type for various cluster types.
-type ClusterType string
+type ClusterType string //nolint:revive
 
 const (
 	ClusterTypeBasic                   ClusterType = "BASIC"
